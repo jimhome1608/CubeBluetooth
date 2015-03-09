@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:color="#070" />
+    <!-- Default State -->
+    <item android:color="#a00" />
+</selector><!-- From: file:/C:/Users/jack2/AndroidStudioProjects/Tut11/app/src/main/res/color/toggle_color.xml -->

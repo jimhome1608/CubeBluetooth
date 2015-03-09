@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\jack2\AndroidStudioProjects\Tut11\app\libs\GraphView-3.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e187192858ff7a5ff7864d6f6a754427e6cb3a87">
+        <dex dex="C:\Users\jack2\AndroidStudioProjects\Tut11\app\build\intermediates\pre-dexed\debug\GraphView-3.0-58bc07014628f70d0f4edbb83adac89f2f482ec6.jar" />
+    </item>
+    <item
+        jar="C:\Users\jack2\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="C:\Users\jack2\AndroidStudioProjects\Tut11\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-8bce17654ccb72fe769d487bd78367f47ca88740.jar" />
+    </item>
+
+</items>
