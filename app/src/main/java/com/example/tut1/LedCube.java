@@ -14,6 +14,19 @@ public class LedCube {
     public String direction = "xup";
     public boolean busy = false;
 
+    public void randomDie() {
+        Led led;
+        Random rn = new Random();
+        for (int i = 0; i<50;i++){
+            led = getLed(rn.nextInt(4), rn.nextInt(4), rn.nextInt(4));
+            if (led.hasColor() == false)
+                continue;
+            led.turnOff();
+            BlueToothWrite();
+            break;
+        };
+    }
+
     public void RandomColors() {
         busy = true;
         Led led;

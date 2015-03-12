@@ -86,12 +86,8 @@ public  class MainActivity extends Activity implements View.OnClickListener, Sen
                     ledCube.LevelZ(3);
                     ledCube.BlueToothWrite();
                 }
-                else {
-                    if  (ledCube.busy != true) {
-                        ledCube.AllOff();
-                        ledCube.BlueToothWrite();
-                    }
-                }
+                else
+                    ledCube.randomDie();
                 /*if (curTime - lastShake > 500){
                     ledCube.AllOff();
                     ledCube.BlueToothWrite();
