@@ -34,17 +34,24 @@ public  class MainActivity extends Activity implements View.OnClickListener, Sen
     private  Sensor myAccellor;
     private Sensor myLight;
     private Vibrator vibrator;
+    long lastUpdate = System.currentTimeMillis();
+    long lastShake = 0;
+    float last_x = 0;
+    float last_y = 0;
+    float last_z = 0;
 
     @Override
     public final void onAccuracyChanged(Sensor sensor, int accuracy) {
         // Do something if sensor accuracy changes.
     }
 
+
     @Override
     public final void onSensorChanged(SensorEvent event) {
         final int type = event.sensor.getType();
-        int y = 0;
-        int x = 0;
+        float y = 0;
+        float x = 0;
+        float z = 0;
         int leftMotorSpeed = 0;
         int righMotorSpeed = 0;
         String NewEventFlag = new String();
@@ -57,6 +64,43 @@ public  class MainActivity extends Activity implements View.OnClickListener, Sen
         float Gz = event.values[2];
         boolean underMark = false;
         boolean overMark = false;
+        long curTime = System.currentTimeMillis();
+        // only allow one update every 100ms.
+        if ((curTime - lastUpdate) > 100) {
+            long diffTime = (curTime - lastUpdate);
+            lastUpdate = curTime;
+            x = Gx;
+            y = Gy;
+            z = Gz;
+            float speed = Math.abs(x+y+z-last_x-last_y-last_z);
+            if (speed > 25) {
+                //tvLeft.setText("shake: " + speed);
+                if (ledCube.busy != true) {
+                    ledCube.RandomLedsRandomColors();
+                    lastShake = curTime;
+                }
+            }
+            else {
+                if (z < 0) {
+                    ledCube.AllOff();
+                    ledCube.LevelZ(3);
+                    ledCube.BlueToothWrite();
+                }
+                else {
+                    if  (ledCube.busy != true) {
+                        ledCube.AllOff();
+                        ledCube.BlueToothWrite();
+                    }
+                }
+                /*if (curTime - lastShake > 500){
+                    ledCube.AllOff();
+                    ledCube.BlueToothWrite();
+                }*/
+            }
+            last_x = x;
+            last_y = y;
+            last_z = z;
+        }
         tvLeft.setText("x:"+ String.format("%.1f", Gx) +"  y:"+ String.format("%.1f", Gy) + " z:"+ String.format("%.1f", Gz));
     }
 

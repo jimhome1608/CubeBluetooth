@@ -12,9 +12,42 @@ public class LedCube {
     public Point3D home3D;
     public ArrayList<Led> ledList = new ArrayList<Led>();
     public String direction = "xup";
+    public boolean busy = false;
+
+    public void RandomColors() {
+        busy = true;
+        Led led;
+        for (int x=0;x<4;x++) {
+            for (int y=0;y<4;y++) {
+                for (int z=0; z<4; z++) {
+                    led = getLed(x,y,z);
+                    led.randomColor();
+
+                }
+            }
+        }
+        busy = false;
+    }
+
+    public void RandomLedsRandomColors() {
+        busy = true;
+        Led led;
+        Random rn = new Random();
+        for (int x=0;x<4;x++) {
+            for (int y=0;y<4;y++) {
+                for (int z=0; z<4; z++) {
+                    led = getLed(rn.nextInt(4),rn.nextInt(4),rn.nextInt(4));
+                    led.randomColor();
+                    BlueToothWrite();
+                   // SystemClock.sleep(10);
+                }
+            }
+        }
+        busy = false;
+    }
 
     public void WalkThisWay() {
-        int _delay = 100;
+        int _delay = 0;
         boolean hitX = false;
         boolean hitY = false;
         boolean hitZ = false;
@@ -74,12 +107,13 @@ public class LedCube {
     }
 
     public void WalkThisWayBasic() {
+        busy = true;
         int x = 0;
         int y = 0;
         int z = 0;
         Led led;
         Led prevLed = null;
-        int _delay = 100;
+        int _delay = 0;
 
         MoveTo(0,0,0);
         for (z=0;z<=3;z++) {
@@ -107,7 +141,7 @@ public class LedCube {
             BlueToothWrite();
             SystemClock.sleep(_delay);
         }
-
+        busy = false;
     }
 
 
@@ -238,6 +272,21 @@ public class LedCube {
             if (led.hasColor()) {
                 led.changed = true;
                 led.b = 0;
+                led.g = 0;
+                led.r = 0;
+            };
+        }
+        //MoveTo(0,0,0);
+        return 0;
+    }
+
+    public int AllOn() {
+        Led led;
+        for (int i = 0; i < 64; i++) {
+            led = (Led) ledList.get(i);
+            if (led.hasColor() == false) {
+                led.changed = true;
+                led.b = 255;
                 led.g = 0;
                 led.r = 0;
             };
@@ -395,15 +444,6 @@ public class LedCube {
         return 0;
     }
 
-    public int randomChanges() {
-        Led led;
-        Random rn = new Random();
-        int Idx = rn.nextInt(64);
-        led = (Led) ledList.get(Idx);
-        led.g = 255;
-        led.changed = true;
-        return Idx;
-    }
 
 
     public class Led {
@@ -433,6 +473,14 @@ public class LedCube {
            return _result;
         }
 
+        public void randomColor() {
+            Random rn = new Random();
+            r = rn.nextInt(255);
+            g = rn.nextInt(255);
+            b = rn.nextInt(255);
+            changed = true;
+        }
+
         public void invert()
         {
             if (hasColor())
@@ -441,7 +489,6 @@ public class LedCube {
                 turnOn();
             changed = true;
         }
-
 
 
         public void turnOff() {
